@@ -26,16 +26,16 @@ export default function RejectionDisplay({ tamperResult, showContinue = true }) 
   const compressionFailed = compressionAfter < COMPRESSION_THRESHOLD
 
   return (
-    <div className="bg-red-900/20 border border-red-500 rounded-lg p-6">
+    <div className="bg-red-900/20 border border-red-500 rounded-lg p-8">
       {/* Header */}
-      <div className="flex items-center justify-center gap-3 mb-6">
-        <div className="w-4 h-4 bg-red-500 rounded-full animate-pulse" />
-        <h2 className="text-2xl font-bold text-red-500">REJECTED</h2>
-        <div className="w-4 h-4 bg-red-500 rounded-full animate-pulse" />
+      <div className="flex items-center justify-center gap-3 mb-8">
+        <div className="w-5 h-5 bg-red-500 rounded-full animate-pulse" />
+        <h2 className="text-3xl font-bold text-red-500">INTEGRITY VIOLATION</h2>
+        <div className="w-5 h-5 bg-red-500 rounded-full animate-pulse" />
       </div>
 
       {/* Metrics */}
-      <div className="space-y-4 font-mono text-sm">
+      <div className="space-y-4 font-mono text-base">
         {/* Entropy */}
         <div className="flex items-center justify-between p-3 bg-gray-900/50 rounded-lg">
           <span className="text-gray-400">Entropy:</span>

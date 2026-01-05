@@ -106,8 +106,10 @@ export default function App() {
 
       case STATES.COMPARISON:
         return (
-          <div className="min-h-screen bg-[#0a0a0a] p-8" onClick={demo.nextState}>
-            <ComparisonView events={demo.events} />
+          <div className="screen-container bg-[#0a0a0a]" onClick={demo.nextState}>
+            <div className="content-wrapper">
+              <ComparisonView events={demo.events} />
+            </div>
           </div>
         )
 
@@ -126,7 +128,7 @@ export default function App() {
   )
 }
 
-// Intro Screen
+// Intro Screen - Larger, more commanding presence
 function IntroScreen({ onContinue }) {
   // Auto-advance after 3 seconds
   useEffect(() => {
@@ -136,24 +138,24 @@ function IntroScreen({ onContinue }) {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center px-8 cursor-pointer"
+      className="screen-container cursor-pointer bg-[#0a0a0a]"
       onClick={onContinue}
     >
-      <div className="text-center max-w-2xl">
-        <div className="text-red-500 font-mono text-sm mb-4 animate-pulse">
+      <div className="text-center max-w-3xl">
+        <div className="text-red-500 font-mono text-base tracking-widest font-medium mb-6 animate-pulse">
           SECURITY INCIDENT DETECTED
         </div>
 
-        <h1 className="text-4xl md:text-5xl font-bold mb-6">
+        <h1 className="text-6xl md:text-7xl font-bold mb-8">
           The Impossible Lie
         </h1>
 
-        <p className="text-xl text-gray-400 mb-8">
+        <p className="text-xl md:text-2xl text-gray-400 mb-10 leading-relaxed max-w-2xl mx-auto">
           A third-party integration just exfiltrated 4,942 customer records.
           Watch how receipts-native logging makes tampering mathematically impossible.
         </p>
 
-        <div className="text-gray-500 text-sm">
+        <div className="text-gray-500 text-base">
           Click or press Space to begin
         </div>
       </div>
@@ -164,30 +166,34 @@ function IntroScreen({ onContinue }) {
 // Build Screen - Events firing, structure growing
 function BuildScreen({ events, tree, entropy, compression }) {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] p-8">
-      <h2 className="text-2xl font-bold mb-8 text-center text-gray-300">
-        Recording Security Events
-      </h2>
+    <div className="screen-container bg-[#0a0a0a]">
+      <div className="content-wrapper">
+        <h2 className="text-3xl font-bold mb-8 text-center text-gray-300">
+          Recording Security Events
+        </h2>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Left column - Event log and metrics */}
-        <div className="space-y-6">
-          <EventLog events={events} />
+        {/* Main content row - Event log beside Merkle tree */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          {/* Left column - Event log */}
+          <div className="min-w-0">
+            <EventLog events={events} />
+          </div>
 
-          <div className="space-y-4">
-            <EntropyGauge value={entropy} />
-            <CompressionGauge value={compression} />
+          {/* Right column - Merkle structure */}
+          <div className="min-w-0">
+            <MerkleStructure tree={tree} />
           </div>
         </div>
 
-        {/* Right column - Merkle structure */}
-        <div className="flex items-center justify-center">
-          <MerkleStructure tree={tree} />
+        {/* Gauges row - below log and tree */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <EntropyGauge value={entropy} />
+          <CompressionGauge value={compression} />
         </div>
-      </div>
 
-      <div className="mt-8 text-center text-gray-600">
-        Building cryptographic receipt chain...
+        <div className="text-center text-gray-500 text-lg">
+          Building cryptographic receipt chain...
+        </div>
       </div>
     </div>
   )
@@ -196,37 +202,42 @@ function BuildScreen({ events, tree, entropy, compression }) {
 // Prompt Screen - Challenge the user
 function PromptScreen({ events, tree, entropy, compression, onContinue }) {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] p-8">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Left column */}
-        <div className="space-y-6">
-          <EventLog events={events} />
+    <div className="screen-container bg-[#0a0a0a]">
+      <div className="content-wrapper">
+        {/* Main content row - Event log beside Merkle tree */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          {/* Left column - Event log */}
+          <div className="min-w-0">
+            <EventLog events={events} />
+          </div>
 
-          <div className="space-y-4">
-            <EntropyGauge value={entropy} />
-            <CompressionGauge value={compression} />
+          {/* Right column - Merkle structure */}
+          <div className="min-w-0">
+            <MerkleStructure tree={tree} />
           </div>
         </div>
 
-        {/* Right column */}
-        <div className="space-y-6">
-          <MerkleStructure tree={tree} />
+        {/* Gauges row - below log and tree */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <EntropyGauge value={entropy} />
+          <CompressionGauge value={compression} />
+        </div>
 
-          <div className="bg-yellow-900/20 border border-yellow-500 rounded-lg p-8 text-center">
-            <h2 className="text-2xl font-bold text-yellow-400 mb-4">
-              Try to change the past
-            </h2>
-            <p className="text-gray-400 text-lg mb-6">
-              The breach has been recorded. Can you modify the logs to hide it?
-            </p>
-            <button
-              onClick={onContinue}
-              className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold
-                         py-4 px-10 rounded-lg transition-colors duration-200 text-lg"
-            >
-              Modify Record
-            </button>
-          </div>
+        {/* Challenge panel - centered, full width */}
+        <div className="bg-yellow-900/20 border border-yellow-500 rounded-lg p-8 text-center">
+          <h2 className="text-3xl font-bold text-yellow-400 mb-4">
+            Try to change the past
+          </h2>
+          <p className="text-gray-400 text-xl mb-6">
+            The breach has been recorded. Can you modify the logs to hide it?
+          </p>
+          <button
+            onClick={onContinue}
+            className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold
+                       py-4 px-12 rounded-lg transition-colors duration-200 text-xl"
+          >
+            Modify Record
+          </button>
         </div>
       </div>
     </div>
@@ -255,37 +266,44 @@ function ModifyScreen({
   }, [events, selectedEvent, onSelectEvent])
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] p-8">
-      <h2 className="text-2xl font-bold mb-8 text-center text-gray-300">
-        Select an event to modify
-      </h2>
+    <div className="screen-container bg-[#0a0a0a]">
+      <div className="content-wrapper">
+        <h2 className="text-3xl font-bold mb-8 text-center text-gray-300">
+          Select an event to modify
+        </h2>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Left column - Event log */}
-        <div className="space-y-6">
-          <EventLog
-            events={events}
-            tamperedIndex={tamperedIndex}
-            onEventClick={onSelectEvent}
-          />
+        {/* Main content row - Event log beside Merkle tree */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          {/* Left column - Event log */}
+          <div className="min-w-0">
+            <EventLog
+              events={events}
+              tamperedIndex={tamperedIndex}
+              onEventClick={onSelectEvent}
+            />
+          </div>
 
-          <div className="space-y-4">
-            <EntropyGauge value={entropy} />
-            <CompressionGauge value={compression} />
+          {/* Right column - Merkle structure */}
+          <div className="min-w-0">
+            <MerkleStructure tree={tree} tamperedIndex={tamperedIndex} />
           </div>
         </div>
 
-        {/* Right column - Modify panel */}
-        <div className="space-y-6">
-          <MerkleStructure tree={tree} tamperedIndex={tamperedIndex} />
-          <ModifyPanel event={selectedEvent} onSubmit={onSubmit} />
+        {/* Gauges row - below log and tree */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <EntropyGauge value={entropy} />
+          <CompressionGauge value={compression} />
         </div>
+
+        {/* Modify panel - centered, full width */}
+        <ModifyPanel event={selectedEvent} onSubmit={onSubmit} />
       </div>
     </div>
   )
 }
 
 // Reject Screen - Show rejection with math and 5-second pause
+// LAYOUT MATCHES Events/Modify screens for visual consistency
 function RejectScreen({ events, tree, tamperedIndex, tamperResult, canContinue, onCanContinue, onContinue }) {
   const [countdown, setCountdown] = useState(5)
   const [shakeClass, setShakeClass] = useState('shake-once')
@@ -316,39 +334,46 @@ function RejectScreen({ events, tree, tamperedIndex, tamperResult, canContinue, 
 
   return (
     <div
-      className={`min-h-screen bg-[#0a0a0a] p-8 ${shakeClass} ${canContinue ? 'cursor-pointer' : 'cursor-not-allowed'}`}
+      className={`screen-container bg-[#0a0a0a] ${shakeClass} ${canContinue ? 'cursor-pointer' : 'cursor-not-allowed'}`}
       onClick={onContinue}
     >
-      {/* Giant REJECTED header */}
-      <div className="text-center mb-8">
-        <h1 className="text-6xl md:text-7xl font-bold text-red-500 animate-pulse">
-          ⊘ REJECTED ⊘
-        </h1>
-      </div>
-
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Left column */}
-        <div className="space-y-6">
-          <EventLog events={events} tamperedIndex={tamperedIndex} />
-          <MerkleStructure tree={tree} tamperedIndex={tamperedIndex} rejected />
+      <div className="content-wrapper">
+        {/* Giant REJECTED header */}
+        <div className="text-center mb-8">
+          <h1 className="text-6xl md:text-8xl font-bold text-red-500 animate-pulse">
+            ⊘ REJECTED ⊘
+          </h1>
         </div>
 
-        {/* Right column - Rejection display with glow */}
-        <div className="rejection-panel">
-          <RejectionDisplay tamperResult={tamperResult} showContinue={false} />
-
-          {/* Countdown or continue message */}
-          <div className="mt-6 text-center">
-            {!canContinue ? (
-              <p className="text-gray-500 text-base">
-                Analyzing integrity violation... {countdown}s
-              </p>
-            ) : (
-              <p className="text-gray-400 text-base">
-                Click or press Space to continue
-              </p>
-            )}
+        {/* Main content row - Event log beside Merkle tree (SAME as other screens) */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          {/* Left column - Event log */}
+          <div className="min-w-0">
+            <EventLog events={events} tamperedIndex={tamperedIndex} />
           </div>
+
+          {/* Right column - Merkle structure (beside log, not below) */}
+          <div className="min-w-0">
+            <MerkleStructure tree={tree} tamperedIndex={tamperedIndex} rejected />
+          </div>
+        </div>
+
+        {/* Rejection details panel - full width below */}
+        <div className="rejection-panel p-6">
+          <RejectionDisplay tamperResult={tamperResult} showContinue={false} />
+        </div>
+
+        {/* Countdown or continue message */}
+        <div className="mt-6 text-center">
+          {!canContinue ? (
+            <p className="text-gray-500 text-lg">
+              Analyzing integrity violation... {countdown}s
+            </p>
+          ) : (
+            <p className="text-gray-400 text-lg">
+              Click or press Space to continue
+            </p>
+          )}
         </div>
       </div>
     </div>

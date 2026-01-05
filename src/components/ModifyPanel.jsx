@@ -40,8 +40,8 @@ export default function ModifyPanel({ event, onSubmit }) {
   const field = getModifiableField()
 
   return (
-    <div className="bg-gray-900/50 rounded-lg p-6 border border-gray-800">
-      <h3 className="text-lg font-bold mb-4 text-white">Modify Record</h3>
+    <div className="bg-gray-900/50 rounded-lg p-8 border border-gray-800">
+      <h3 className="text-2xl font-bold mb-6 text-white">Modify Record</h3>
 
       {/* Original event display */}
       <div className="mb-6 p-4 bg-gray-800/50 rounded-lg">

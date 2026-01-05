@@ -168,33 +168,36 @@ function TreeVisualization({ tree, tamperedIndex, rejected }) {
 
 export default function MerkleStructure({ tree, tamperedIndex = null, rejected = false }) {
   return (
-    <div className="w-full min-h-[400px] h-96 bg-gray-900/30 rounded-lg border border-gray-800 overflow-hidden relative">
-      <Canvas
-        camera={{ position: [0, 0, 5], fov: 50 }}
-        style={{ background: 'transparent' }}
-      >
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={1} />
-        <pointLight position={[-10, -10, -10]} intensity={0.5} />
+    <div className="w-full h-[400px] bg-gray-900/30 rounded-lg border border-gray-800 relative p-4">
+      {/* Canvas container with inner padding to prevent cutoff */}
+      <div className="w-full h-full rounded overflow-hidden">
+        <Canvas
+          camera={{ position: [0, 0, 6], fov: 45 }}
+          style={{ background: 'transparent' }}
+        >
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 10, 10]} intensity={1} />
+          <pointLight position={[-10, -10, -10]} intensity={0.5} />
 
-        <TreeVisualization
-          tree={tree}
-          tamperedIndex={tamperedIndex}
-          rejected={rejected}
-        />
+          <TreeVisualization
+            tree={tree}
+            tamperedIndex={tamperedIndex}
+            rejected={rejected}
+          />
 
-        <OrbitControls
-          enableZoom={false}
-          enablePan={false}
-          autoRotate
-          autoRotateSpeed={0.5}
-          minPolarAngle={Math.PI / 3}
-          maxPolarAngle={Math.PI / 1.5}
-        />
-      </Canvas>
+          <OrbitControls
+            enableZoom={false}
+            enablePan={false}
+            autoRotate
+            autoRotateSpeed={0.5}
+            minPolarAngle={Math.PI / 3}
+            maxPolarAngle={Math.PI / 1.5}
+          />
+        </Canvas>
+      </div>
 
-      {/* Legend - BIGGER AND READABLE */}
-      <div className="absolute bottom-4 right-4 flex gap-6 text-sm font-mono text-gray-400">
+      {/* Legend - positioned inside container at bottom */}
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-6 text-sm font-mono text-gray-400">
         <div className="flex items-center gap-2">
           <div className="w-4 h-4 rounded-full bg-blue-500" />
           <span>Leaf</span>

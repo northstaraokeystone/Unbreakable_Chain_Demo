@@ -23,17 +23,17 @@ export default function ComparisonView({ events = [] }) {
   }
 
   return (
-    <div className="space-y-8">
-      <h2 className="text-2xl font-bold text-center text-gray-300">
+    <div className="space-y-10">
+      <h2 className="text-3xl font-bold text-center text-gray-300">
         Standard Logging vs Receipts-Native
       </h2>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-2 gap-10">
         {/* Standard Logging Column */}
-        <div className="bg-gray-900 rounded-lg p-6 border border-gray-700">
+        <div className="bg-gray-900 rounded-lg p-8 border border-gray-700">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-bold text-gray-300">Standard Logging</h3>
-            <span className="text-sm bg-yellow-500/20 text-yellow-500 px-3 py-1 rounded">
+            <h3 className="text-xl font-bold text-gray-300">Standard Logging</h3>
+            <span className="text-base bg-yellow-500/20 text-yellow-500 px-4 py-2 rounded font-medium">
               MUTABLE
             </span>
           </div>
@@ -85,10 +85,10 @@ export default function ComparisonView({ events = [] }) {
         </div>
 
         {/* Receipts-Native Column */}
-        <div className="bg-gray-900 rounded-lg p-6 border border-green-900">
+        <div className="bg-gray-900 rounded-lg p-8 border border-green-900">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-bold text-green-400">Receipts-Native</h3>
-            <span className="text-sm bg-green-500/20 text-green-500 px-3 py-1 rounded">
+            <h3 className="text-xl font-bold text-green-400">Receipts-Native</h3>
+            <span className="text-base bg-green-500/20 text-green-500 px-4 py-2 rounded font-medium">
               IMMUTABLE
             </span>
           </div>
@@ -118,7 +118,7 @@ export default function ComparisonView({ events = [] }) {
             ))}
           </div>
 
-          <div className="w-full py-3 bg-red-900/50 text-red-400 text-center rounded-lg border border-red-900 font-bold text-base">
+          <div className="w-full py-4 bg-red-900/50 text-red-400 text-center rounded-lg border border-red-900 font-bold text-lg">
             ⊘ REJECTED
           </div>
         </div>
@@ -126,11 +126,11 @@ export default function ComparisonView({ events = [] }) {
 
       {/* Summary */}
       <div className="text-center max-w-3xl mx-auto">
-        <p className="text-gray-400 text-base">
+        <p className="text-gray-400 text-lg">
           Standard logging allows silent modification.
           Receipts-native makes tampering mathematically impossible.
         </p>
-        <p className="mt-4 text-gray-500 text-base">
+        <p className="mt-6 text-gray-500 text-lg">
           Click or press Space to continue
         </p>
       </div>
