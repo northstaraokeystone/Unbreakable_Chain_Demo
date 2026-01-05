@@ -19,7 +19,7 @@ export default function EventLog({ events = [], tamperedIndex = null, onEventCli
   return (
     <div
       ref={containerRef}
-      className="bg-gray-900/50 rounded-lg p-4 font-mono text-sm overflow-y-auto max-h-64 border border-gray-800"
+      className="bg-gray-900/50 rounded-lg p-6 font-mono text-base overflow-y-auto min-h-[320px] max-h-[400px] border border-gray-800"
     >
       {events.length === 0 ? (
         <div className="text-gray-500 text-center py-4">

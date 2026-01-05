@@ -7,7 +7,7 @@ import React from 'react'
 import { ENTROPY_THRESHOLD } from '../lib/entropy'
 import { COMPRESSION_THRESHOLD } from '../lib/compression'
 
-export default function RejectionDisplay({ tamperResult }) {
+export default function RejectionDisplay({ tamperResult, showContinue = true }) {
   if (!tamperResult) {
     return null
   }
@@ -92,10 +92,12 @@ export default function RejectionDisplay({ tamperResult }) {
         </div>
       </div>
 
-      {/* Bottom message */}
-      <div className="mt-6 text-center text-gray-400 text-sm">
-        Click or press Space to continue
-      </div>
+      {/* Bottom message - conditionally shown */}
+      {showContinue && (
+        <div className="mt-6 text-center text-gray-400 text-sm">
+          Click or press Space to continue
+        </div>
+      )}
     </div>
   )
 }

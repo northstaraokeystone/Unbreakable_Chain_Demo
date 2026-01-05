@@ -31,7 +31,7 @@ function MerkleNode({ position, isLeaf, isTampered, isRoot }) {
 
   return (
     <mesh ref={meshRef} position={position}>
-      <sphereGeometry args={[isRoot ? 0.15 : isLeaf ? 0.1 : 0.08, 16, 16]} />
+      <sphereGeometry args={[isRoot ? 0.22 : isLeaf ? 0.16 : 0.12, 16, 16]} />
       <meshStandardMaterial
         color={color}
         emissive={isTampered ? '#ef4444' : '#000000'}
@@ -168,7 +168,7 @@ function TreeVisualization({ tree, tamperedIndex, rejected }) {
 
 export default function MerkleStructure({ tree, tamperedIndex = null, rejected = false }) {
   return (
-    <div className="w-full h-64 bg-gray-900/30 rounded-lg border border-gray-800 overflow-hidden">
+    <div className="w-full min-h-[400px] h-96 bg-gray-900/30 rounded-lg border border-gray-800 overflow-hidden relative">
       <Canvas
         camera={{ position: [0, 0, 5], fov: 50 }}
         style={{ background: 'transparent' }}
@@ -193,23 +193,23 @@ export default function MerkleStructure({ tree, tamperedIndex = null, rejected =
         />
       </Canvas>
 
-      {/* Legend */}
-      <div className="absolute bottom-2 right-2 flex gap-4 text-xs font-mono text-gray-400">
-        <div className="flex items-center gap-1">
-          <div className="w-2 h-2 rounded-full bg-blue-500" />
+      {/* Legend - BIGGER AND READABLE */}
+      <div className="absolute bottom-4 right-4 flex gap-6 text-sm font-mono text-gray-400">
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 rounded-full bg-blue-500" />
           <span>Leaf</span>
         </div>
-        <div className="flex items-center gap-1">
-          <div className="w-2 h-2 rounded-full bg-gray-500" />
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 rounded-full bg-gray-500" />
           <span>Node</span>
         </div>
-        <div className="flex items-center gap-1">
-          <div className="w-2 h-2 rounded-full bg-green-500" />
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 rounded-full bg-green-500" />
           <span>Root</span>
         </div>
         {rejected && (
-          <div className="flex items-center gap-1">
-            <div className="w-2 h-2 rounded-full bg-red-500" />
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded-full bg-red-500" />
             <span>Tampered</span>
           </div>
         )}

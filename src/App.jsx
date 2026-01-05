@@ -3,7 +3,7 @@
  * Uses useDemo hook for state management
  */
 
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, useState } from 'react'
 import { useDemo, STATES } from './hooks/useDemo'
 import MerkleStructure from './components/MerkleStructure'
 import EntropyGauge from './components/EntropyGauge'
@@ -16,22 +16,32 @@ import CloseScreen from './components/CloseScreen'
 
 export default function App() {
   const demo = useDemo()
+  const [rejectCanContinue, setRejectCanContinue] = useState(false)
 
   // Initialize on mount
   useEffect(() => {
     demo.init()
   }, [])
 
+  // Reset rejection pause when entering reject state
+  useEffect(() => {
+    if (demo.state === STATES.REJECT) {
+      setRejectCanContinue(false)
+    }
+  }, [demo.state])
+
   // Keyboard shortcuts
   const handleKeyDown = useCallback((e) => {
     if (e.key === ' ' || e.key === 'Enter') {
       e.preventDefault()
+      // Block during rejection pause
+      if (demo.state === STATES.REJECT && !rejectCanContinue) return
       demo.nextState()
     } else if (e.key === 'r' || e.key === 'R') {
       e.preventDefault()
       demo.restart()
     }
-  }, [demo.state])
+  }, [demo.state, rejectCanContinue])
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown)
@@ -86,13 +96,17 @@ export default function App() {
             tree={demo.tree}
             tamperedIndex={demo.tamperedIndex}
             tamperResult={demo.tamperResult}
-            onContinue={demo.nextState}
+            canContinue={rejectCanContinue}
+            onCanContinue={() => setRejectCanContinue(true)}
+            onContinue={() => {
+              if (rejectCanContinue) demo.nextState()
+            }}
           />
         )
 
       case STATES.COMPARISON:
         return (
-          <div className="max-w-5xl mx-auto px-8 py-12" onClick={demo.nextState}>
+          <div className="min-h-screen bg-[#0a0a0a] p-8" onClick={demo.nextState}>
             <ComparisonView events={demo.events} />
           </div>
         )
@@ -150,29 +164,29 @@ function IntroScreen({ onContinue }) {
 // Build Screen - Events firing, structure growing
 function BuildScreen({ events, tree, entropy, compression }) {
   return (
-    <div className="max-w-5xl mx-auto px-8 py-12">
-      <h2 className="text-2xl font-bold mb-6 text-center">
+    <div className="min-h-screen bg-[#0a0a0a] p-8">
+      <h2 className="text-2xl font-bold mb-8 text-center text-gray-300">
         Recording Security Events
       </h2>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left column - Event log and metrics */}
         <div className="space-y-6">
           <EventLog events={events} />
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-4">
             <EntropyGauge value={entropy} />
             <CompressionGauge value={compression} />
           </div>
         </div>
 
         {/* Right column - Merkle structure */}
-        <div className="relative">
+        <div className="flex items-center justify-center">
           <MerkleStructure tree={tree} />
         </div>
       </div>
 
-      <div className="mt-8 text-center text-gray-500 text-sm">
+      <div className="mt-8 text-center text-gray-600">
         Building cryptographic receipt chain...
       </div>
     </div>
@@ -182,13 +196,13 @@ function BuildScreen({ events, tree, entropy, compression }) {
 // Prompt Screen - Challenge the user
 function PromptScreen({ events, tree, entropy, compression, onContinue }) {
   return (
-    <div className="max-w-5xl mx-auto px-8 py-12">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div className="min-h-screen bg-[#0a0a0a] p-8">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left column */}
         <div className="space-y-6">
           <EventLog events={events} />
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-4">
             <EntropyGauge value={entropy} />
             <CompressionGauge value={compression} />
           </div>
@@ -198,17 +212,17 @@ function PromptScreen({ events, tree, entropy, compression, onContinue }) {
         <div className="space-y-6">
           <MerkleStructure tree={tree} />
 
-          <div className="bg-yellow-900/20 border border-yellow-500 rounded-lg p-6 text-center">
+          <div className="bg-yellow-900/20 border border-yellow-500 rounded-lg p-8 text-center">
             <h2 className="text-2xl font-bold text-yellow-400 mb-4">
               Try to change the past
             </h2>
-            <p className="text-gray-400 mb-6">
+            <p className="text-gray-400 text-lg mb-6">
               The breach has been recorded. Can you modify the logs to hide it?
             </p>
             <button
               onClick={onContinue}
               className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold
-                         py-3 px-8 rounded-lg transition-colors duration-200"
+                         py-4 px-10 rounded-lg transition-colors duration-200 text-lg"
             >
               Modify Record
             </button>
@@ -241,12 +255,12 @@ function ModifyScreen({
   }, [events, selectedEvent, onSelectEvent])
 
   return (
-    <div className="max-w-5xl mx-auto px-8 py-12">
-      <h2 className="text-2xl font-bold mb-6 text-center">
+    <div className="min-h-screen bg-[#0a0a0a] p-8">
+      <h2 className="text-2xl font-bold mb-8 text-center text-gray-300">
         Select an event to modify
       </h2>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left column - Event log */}
         <div className="space-y-6">
           <EventLog
@@ -255,7 +269,7 @@ function ModifyScreen({
             onEventClick={onSelectEvent}
           />
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-4">
             <EntropyGauge value={entropy} />
             <CompressionGauge value={compression} />
           </div>
@@ -271,23 +285,70 @@ function ModifyScreen({
   )
 }
 
-// Reject Screen - Show rejection with math
-function RejectScreen({ events, tree, tamperedIndex, tamperResult, onContinue }) {
+// Reject Screen - Show rejection with math and 5-second pause
+function RejectScreen({ events, tree, tamperedIndex, tamperResult, canContinue, onCanContinue, onContinue }) {
+  const [countdown, setCountdown] = useState(5)
+  const [shakeClass, setShakeClass] = useState('shake-once')
+
+  // 5-second countdown before allowing continue
+  useEffect(() => {
+    if (canContinue) return
+
+    const timer = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(timer)
+          onCanContinue()
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [canContinue, onCanContinue])
+
+  // Remove shake class after animation
+  useEffect(() => {
+    const timer = setTimeout(() => setShakeClass(''), 300)
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
     <div
-      className="max-w-5xl mx-auto px-8 py-12 cursor-pointer"
+      className={`min-h-screen bg-[#0a0a0a] p-8 ${shakeClass} ${canContinue ? 'cursor-pointer' : 'cursor-not-allowed'}`}
       onClick={onContinue}
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      {/* Giant REJECTED header */}
+      <div className="text-center mb-8">
+        <h1 className="text-6xl md:text-7xl font-bold text-red-500 animate-pulse">
+          ⊘ REJECTED ⊘
+        </h1>
+      </div>
+
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left column */}
         <div className="space-y-6">
           <EventLog events={events} tamperedIndex={tamperedIndex} />
           <MerkleStructure tree={tree} tamperedIndex={tamperedIndex} rejected />
         </div>
 
-        {/* Right column - Rejection display */}
-        <div>
-          <RejectionDisplay tamperResult={tamperResult} />
+        {/* Right column - Rejection display with glow */}
+        <div className="rejection-panel">
+          <RejectionDisplay tamperResult={tamperResult} showContinue={false} />
+
+          {/* Countdown or continue message */}
+          <div className="mt-6 text-center">
+            {!canContinue ? (
+              <p className="text-gray-500 text-base">
+                Analyzing integrity violation... {countdown}s
+              </p>
+            ) : (
+              <p className="text-gray-400 text-base">
+                Click or press Space to continue
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>
