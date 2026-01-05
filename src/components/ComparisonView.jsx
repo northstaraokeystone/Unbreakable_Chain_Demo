@@ -70,7 +70,7 @@ export default function ComparisonView({ events = [] }) {
             <button
               onClick={handleStandardModify}
               className="w-full bg-transparent border border-red-500 text-red-400 font-bold py-3 px-4
-                         rounded-lg transition-colors duration-200 text-base hover:bg-red-500/20"
+                         rounded-lg transition-colors duration-[600ms] text-base hover:bg-red-500/20"
             >
               Modify Export Record
             </button>

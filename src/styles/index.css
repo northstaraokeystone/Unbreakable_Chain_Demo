@@ -59,7 +59,7 @@ html, body, #root {
 
 /* Gauge animation */
 .gauge-fill {
-  transition: width 0.5s ease-out, background-color 0.3s ease;
+  transition: width 1.5s ease-out, background-color 0.9s ease;
 }
 
 /* Node pulse animation */
@@ -69,14 +69,14 @@ html, body, #root {
 }
 
 .pulse-red {
-  animation: pulse-red 0.5s ease-in-out infinite;
+  animation: pulse-red 1s ease-in-out infinite;
 }
 
 /* Rejection panel glow effect */
 .rejection-panel {
   box-shadow: 0 0 60px rgba(239, 68, 68, 0.4);
   border-radius: 0.5rem;
-  animation: pulse-glow 1.5s ease-in-out infinite;
+  animation: pulse-glow 3s ease-in-out infinite;
 }
 
 @keyframes pulse-glow {
@@ -103,7 +103,7 @@ html, body, #root {
 }
 
 .shake-once {
-  animation: shake 0.4s ease-in-out;
+  animation: shake 0.8s ease-in-out;
 }
 
 /* Fade transitions */
@@ -115,7 +115,7 @@ html, body, #root {
 .fade-enter-active {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.9s ease, transform 0.9s ease;
 }
 
 .fade-exit {
@@ -124,5 +124,5 @@ html, body, #root {
 
 .fade-exit-active {
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.9s ease;
 }

@@ -94,7 +94,7 @@ export default function ModifyPanel({ event, onSubmit }) {
         <button
           type="submit"
           className="w-full bg-white/10 border border-red-500 text-red-400 font-bold py-3 px-4
-                     rounded-lg transition-colors duration-200 text-lg hover:bg-red-500/20"
+                     rounded-lg transition-colors duration-[600ms] text-lg hover:bg-red-500/20"
         >
           Attempt Modification
         </button>
