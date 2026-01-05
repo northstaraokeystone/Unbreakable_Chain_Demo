@@ -14,7 +14,7 @@ export default function CloseScreen({ merkleRoot }) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#0a0a0a] px-8">
+    <div className="screen-container bg-[#0a0a0a]">
 
       {/* Stats - MONOCHROME ONLY */}
       <div className="flex gap-16 mb-12">
@@ -36,10 +36,10 @@ export default function CloseScreen({ merkleRoot }) {
         </div>
       </div>
 
-      {/* Tagline */}
+      {/* Tagline - Updated copy per spec */}
       <h1 className="text-3xl md:text-4xl text-center mb-16">
-        <span className="text-gray-300">"I don't detect lies.</span>
-        <span className="text-red-500"> I make lying impossible."</span>
+        <span className="text-gray-300">Don't just detect lies, </span>
+        <span className="text-red-500">make lying impossible</span>
       </h1>
 
       {/* Simple restart hint - NO BUTTONS, NO QR, NO CTA */}
