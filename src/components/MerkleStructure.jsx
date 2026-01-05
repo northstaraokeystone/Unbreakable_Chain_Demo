@@ -189,7 +189,7 @@ export default function MerkleStructure({ tree, tamperedIndex = null, rejected =
             enableZoom={false}
             enablePan={false}
             autoRotate
-            autoRotateSpeed={0.5}
+            autoRotateSpeed={0.25}
             minPolarAngle={Math.PI / 3}
             maxPolarAngle={Math.PI / 1.5}
           />

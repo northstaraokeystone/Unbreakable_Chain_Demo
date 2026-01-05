@@ -130,9 +130,9 @@ export default function App() {
 
 // Intro Screen - Larger, more commanding presence
 function IntroScreen({ onContinue }) {
-  // Auto-advance after 3 seconds
+  // Auto-advance after 9 seconds
   useEffect(() => {
-    const timer = setTimeout(onContinue, 3000)
+    const timer = setTimeout(onContinue, 9000)
     return () => clearTimeout(timer)
   }, [onContinue])
 
@@ -303,13 +303,13 @@ function ModifyScreen({
   )
 }
 
-// Reject Screen - Show rejection with math and 5-second pause
+// Reject Screen - Show rejection with math and 30-second pause
 // LAYOUT MATCHES Events/Modify screens for visual consistency
 function RejectScreen({ events, tree, tamperedIndex, tamperResult, canContinue, onCanContinue, onContinue }) {
-  const [countdown, setCountdown] = useState(5)
+  const [countdown, setCountdown] = useState(30)
   const [shakeClass, setShakeClass] = useState('shake-once')
 
-  // 5-second countdown before allowing continue
+  // 30-second countdown before allowing continue
   useEffect(() => {
     if (canContinue) return
 
@@ -329,7 +329,7 @@ function RejectScreen({ events, tree, tamperedIndex, tamperResult, canContinue, 
 
   // Remove shake class after animation
   useEffect(() => {
-    const timer = setTimeout(() => setShakeClass(''), 300)
+    const timer = setTimeout(() => setShakeClass(''), 600)
     return () => clearTimeout(timer)
   }, [])
 

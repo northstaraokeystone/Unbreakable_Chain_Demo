@@ -92,7 +92,7 @@ const useDemoStore = create((set, get) => ({
 
     // Add events one by one with delay
     for (let i = 0; i < allEvents.length; i++) {
-      await new Promise(resolve => setTimeout(resolve, 800))
+      await new Promise(resolve => setTimeout(resolve, 2400))
 
       const { tree } = get()
       const event = allEvents[i]
@@ -111,7 +111,7 @@ const useDemoStore = create((set, get) => ({
     }
 
     // After all events added, transition to PROMPT
-    await new Promise(resolve => setTimeout(resolve, 500))
+    await new Promise(resolve => setTimeout(resolve, 2000))
     set({ state: STATES.PROMPT })
   },
 
@@ -143,13 +143,13 @@ const useDemoStore = create((set, get) => ({
       state: STATES.REJECT
     })
 
-    // Auto-advance after 3 seconds
+    // Auto-advance after 18 seconds
     setTimeout(() => {
       const currentState = get().state
       if (currentState === STATES.REJECT) {
         set({ state: STATES.COMPARISON })
       }
-    }, 3000)
+    }, 18000)
   },
 
   // Restart the demo

@@ -36,7 +36,7 @@ export default function EventLog({ events = [], tamperedIndex = null, onEventCli
                 key={event.id}
                 onClick={() => onEventClick && onEventClick(index)}
                 className={`
-                  p-3 rounded transition-all duration-300
+                  p-3 rounded transition-all duration-[900ms]
                   ${isTampered ? 'bg-red-900/30 border border-red-500' : ''}
                   ${isLatest ? 'bg-blue-900/20' : ''}
                   ${onEventClick ? 'cursor-pointer hover:bg-gray-800/50' : ''}
