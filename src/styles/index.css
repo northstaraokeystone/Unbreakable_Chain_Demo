@@ -14,6 +14,8 @@ html, body, #root {
   background-color: #0a0a0a;
   color: #ffffff;
   font-family: 'Inter', system-ui, sans-serif;
+  /* Increase base font size */
+  font-size: 18px;
 }
 
 .font-mono {
@@ -22,7 +24,7 @@ html, body, #root {
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -31,7 +33,7 @@ html, body, #root {
 
 ::-webkit-scrollbar-thumb {
   background: #3b82f6;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -51,6 +53,40 @@ html, body, #root {
 
 .pulse-red {
   animation: pulse-red 0.5s ease-in-out infinite;
+}
+
+/* Rejection panel glow effect */
+.rejection-panel {
+  box-shadow: 0 0 60px rgba(239, 68, 68, 0.4);
+  border-radius: 0.5rem;
+  animation: pulse-glow 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 80px rgba(239, 68, 68, 0.6);
+  }
+}
+
+/* Screen shake animation */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10% { transform: translateX(-8px); }
+  20% { transform: translateX(8px); }
+  30% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  50% { transform: translateX(-4px); }
+  60% { transform: translateX(4px); }
+  70% { transform: translateX(-2px); }
+  80% { transform: translateX(2px); }
+  90% { transform: translateX(-1px); }
+}
+
+.shake-once {
+  animation: shake 0.4s ease-in-out;
 }
 
 /* Fade transitions */

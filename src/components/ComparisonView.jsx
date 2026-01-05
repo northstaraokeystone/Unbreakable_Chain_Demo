@@ -1,5 +1,6 @@
 /**
  * ComparisonView - Side-by-side standard logging vs receipts-native
+ * Wider columns, cleaner design
  */
 
 import React, { useState } from 'react'
@@ -22,22 +23,22 @@ export default function ComparisonView({ events = [] }) {
   }
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-center text-white">
+    <div className="space-y-8">
+      <h2 className="text-2xl font-bold text-center text-gray-300">
         Standard Logging vs Receipts-Native
       </h2>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="max-w-6xl mx-auto grid grid-cols-2 gap-8">
         {/* Standard Logging Column */}
-        <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-800">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-bold text-gray-400">Standard Logging</h3>
-            <span className="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded">
+        <div className="bg-gray-900 rounded-lg p-6 border border-gray-700">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-lg font-bold text-gray-300">Standard Logging</h3>
+            <span className="text-sm bg-yellow-500/20 text-yellow-500 px-3 py-1 rounded">
               MUTABLE
             </span>
           </div>
 
-          <div className="space-y-2 font-mono text-sm max-h-48 overflow-y-auto">
+          <div className="space-y-3 font-mono text-base max-h-64 overflow-y-auto mb-6">
             {events.map((event, index) => {
               const isModified = standardModified && index === exportEventIndex
               const displayEvent = isModified ? modifiedEvent : event
@@ -45,7 +46,7 @@ export default function ComparisonView({ events = [] }) {
               return (
                 <div
                   key={event.id}
-                  className={`p-2 rounded ${isModified ? 'bg-green-900/30 border border-green-500' : 'bg-gray-800/50'}`}
+                  className={`p-3 rounded ${isModified ? 'bg-green-900/30 border border-green-500' : 'bg-gray-800/50'}`}
                 >
                   <div className="flex items-center gap-2">
                     <span className="text-gray-500">{displayEvent.timestamp}</span>
@@ -53,9 +54,9 @@ export default function ComparisonView({ events = [] }) {
                       {displayEvent.type}
                     </span>
                   </div>
-                  <div className="text-gray-400 text-xs mt-1">
+                  <div className="text-gray-400 text-sm mt-1">
                     {Object.entries(displayEvent.details).map(([k, v]) => (
-                      <span key={k} className="mr-2">
+                      <span key={k} className="mr-3">
                         {k}: {Array.isArray(v) ? `[${v.join(', ')}]` : String(v)}
                       </span>
                     ))}
@@ -65,40 +66,38 @@ export default function ComparisonView({ events = [] }) {
             })}
           </div>
 
-          <div className="mt-4">
-            {!standardModified ? (
-              <button
-                onClick={handleStandardModify}
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4
-                           rounded-lg transition-colors duration-200"
-              >
-                Modify Export Record
-              </button>
-            ) : (
-              <div className="text-center space-y-2">
-                <div className="text-green-400 font-bold">✓ Modified Successfully</div>
-                <div className="text-gray-400 text-sm">
-                  Records changed from 4942 to 0. No trace of tampering.
-                </div>
+          {!standardModified ? (
+            <button
+              onClick={handleStandardModify}
+              className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4
+                         rounded-lg transition-colors duration-200 text-base"
+            >
+              Modify Export Record
+            </button>
+          ) : (
+            <div className="text-center space-y-2">
+              <div className="text-green-400 font-bold text-lg">✓ Modified Successfully</div>
+              <div className="text-gray-400 text-base">
+                Records changed from 4942 to 0. No trace of tampering.
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
 
         {/* Receipts-Native Column */}
-        <div className="bg-gray-900/50 rounded-lg p-4 border border-blue-800">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-bold text-blue-400">Receipts-Native</h3>
-            <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">
+        <div className="bg-gray-900 rounded-lg p-6 border border-green-900">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-lg font-bold text-green-400">Receipts-Native</h3>
+            <span className="text-sm bg-green-500/20 text-green-500 px-3 py-1 rounded">
               IMMUTABLE
             </span>
           </div>
 
-          <div className="space-y-2 font-mono text-sm max-h-48 overflow-y-auto">
+          <div className="space-y-3 font-mono text-base max-h-64 overflow-y-auto mb-6">
             {events.map((event, index) => (
               <div
                 key={event.id}
-                className={`p-2 rounded bg-gray-800/50 ${
+                className={`p-3 rounded bg-gray-800/50 ${
                   index === exportEventIndex ? 'border border-gray-600' : ''
                 }`}
               >
@@ -108,9 +107,9 @@ export default function ComparisonView({ events = [] }) {
                     {event.type}
                   </span>
                 </div>
-                <div className="text-gray-400 text-xs mt-1">
+                <div className="text-gray-400 text-sm mt-1">
                   {Object.entries(event.details).map(([k, v]) => (
-                    <span key={k} className="mr-2">
+                    <span key={k} className="mr-3">
                       {k}: {Array.isArray(v) ? `[${v.join(', ')}]` : String(v)}
                     </span>
                   ))}
@@ -119,29 +118,19 @@ export default function ComparisonView({ events = [] }) {
             ))}
           </div>
 
-          <div className="mt-4">
-            <button
-              disabled
-              className="w-full bg-gray-700 text-gray-400 font-bold py-2 px-4
-                         rounded-lg cursor-not-allowed opacity-50 relative"
-            >
-              Modify Export Record
-              <span className="absolute inset-0 flex items-center justify-center
-                               bg-red-900/80 rounded-lg text-red-400 font-bold">
-                REJECTED
-              </span>
-            </button>
+          <div className="w-full py-3 bg-red-900/50 text-red-400 text-center rounded-lg border border-red-900 font-bold text-base">
+            ⊘ REJECTED
           </div>
         </div>
       </div>
 
       {/* Summary */}
-      <div className="text-center text-gray-400 text-sm">
-        <p>
+      <div className="text-center max-w-3xl mx-auto">
+        <p className="text-gray-400 text-base">
           Standard logging allows silent modification.
           Receipts-native makes tampering mathematically impossible.
         </p>
-        <p className="mt-2 text-gray-500">
+        <p className="mt-4 text-gray-500 text-base">
           Click or press Space to continue
         </p>
       </div>
